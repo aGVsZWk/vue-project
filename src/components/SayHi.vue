@@ -5,26 +5,57 @@
         {{message}}<br>
         {{abc}}
     </div> -->
-    <div v-if="a>100">
-      <input type='button' @click="show_my_value()" value="..."/>
+    <div v-if="a>-1">
+      <input type='button' style="display:block;"  @click="show_my_value()" value="..."/>
+      <input type="button" style="display:block;" value="测试axios" @click="axios_go()">
+      <input type="button" style="display:block;" value="测试axios2" @click="axios_go_2()">
+      <div>a is {{a}}</div>
     </div>
 </template>
 
 <script>
 // script代码块中表示的是js代码
+import axios from 'axios'
+import CommonHi from '@/mixins/common_hi.js'
+
 export default {
   // 该写法和下面的写法意义一样
+
   data () {
     return {
       message: '你好Vue! 本消息来自变量',
       abc: 'I am abc',
-      a: 101
+      a: 0
     }
   },
   methods: {
     show_my_value: function () {
       alert('my value' + this.my_value)
+    },
+    axios_go: function () {
+      axios.get('/api/ore/').then(
+        function (response) {
+          console.log(response.data.count)
+          this.a = response.data.count
+        }
+      )
+    },
+    axios_go_2: function () {
+      let that = this
+      axios.get('/api/ore/').then(
+        function (response) {
+          console.log(response.data.count)
+          that.a = response.data.count
+        }
+      )
     }
+  },
+
+  mixins: [CommonHi],
+  mounted () {
+    alert(this.hi('from script code'))
+    // 不加this, 就会报错
+    // alert(hi('asd'))
   }
 }
 // import {sum, pi} from "@lib/math_test"

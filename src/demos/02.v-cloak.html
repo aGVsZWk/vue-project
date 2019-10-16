@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+  <style>
+    [v-cloak] {
+      display: none;
+      /* 所有应用 v-clock 元素, 不显示 */
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <!-- 使用 v-cloak 能够解决 插值表达式 闪烁的问题 -->
+    <p v-cloak>++++++++ {{msg}} -----------</p> <!-- 解决网速慢显示默认值得问题 -->
+    <h4 v-text="msg">=========</h4>
+    <!-- 作用和 插值表达式 基本一样, 区别:
+      1. 默认 v-text 没有闪烁问题
+      2. v-text会覆盖元素中原本的内容, 但是 插值表达式 只会替换自己的占位符, 不会整个元素的内容清空 -->
+
+    {{msg2}} <!-- 插值表达式 不会被转义输出 -->
+    <div v-text="msg2">aaa</div> <!-- v-text 不会被转义输出 -->
+    <div v-html="msg2">aaa</div> <!-- v-msg2 会被转义输出 -->
+    <!-- 除了插值表达式, 都会被覆盖显示 -->
+
+    <input type="button" value="按钮" title="123"> <!-- 鼠标放上去, 显示123 -->
+    <input type="button" value="按钮" title="mytitle"> <!-- 鼠标放上去, 显示mytitle -->
+    <!-- v-bind 是 Vue 中提供的用于绑定属性的指令 -->
+    <input type="button" value="按钮" v-bind:title="mytitle"> <!-- 鼠标放上去, 显示data中的mytitle -->
+    <!-- v-bind 会把后面东西当做 js 代码去解析执行, 可直接操作js代码 -->
+    <input type="button" value="按钮" v-bind:title="mytitle + '123'"> <!-- 鼠标放上去, 显示data中的mytitle 123-->
+    <!-- v-bind:属性 可直接简写成 :属性 -->
+    <input type="button" value="按钮" :title="mytitle + '123'"> <!-- 鼠标放上去, 显示data中的mytitle 123-->
+
+
+  </div>
+
+  <script>
+    var vm = new Vue({
+      el: '#app',
+
+      data: {
+        msg: '123',
+        msg2: '<h1>哈哈, I am h1</h1>',
+        mytitle: '这是自己定义的title'
+      }
+    })
+  </script>
+</body>
+
+</html>

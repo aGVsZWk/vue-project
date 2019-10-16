@@ -2,9 +2,10 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import SayHi from '@/components/SayHi'
 import Hello from '@/components/Hello'
-import SayHiFromVariable from '@/components/SayHiFromVariable'
+import SayHiFromVariable from '../components/SayHiFromVariable'
 import Blog from '@/components/Blog'
 import Blogs from '@/components/Blogs'
+import SayHiFromMixin from '@/components/SayHiFromMixin'
 
 Vue.use(Router)
 export default new Router({
@@ -22,6 +23,11 @@ export default new Router({
     path: '/say-hi-from-variable',
     name: 'SayHiFromVariable',
     component: SayHiFromVariable
+  },
+  {
+    path: '/say-hi-from-mixin',
+    name: 'SayHiFromMixin',
+    component: SayHiFromMixin
   },
   {
     path: '/blog',

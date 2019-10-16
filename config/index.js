@@ -21,14 +21,13 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/api': {
-        target: 'http://siwei.me',
+        target: 'http://192.168.2.55',
         changeOrigin: true,
         pathRewrite: {
           '^/api': ''
         }
       }
     },
-
 
     // Use Eslint Loader?
     // If true, your code will be linted during bundling and
