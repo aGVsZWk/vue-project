@@ -38,6 +38,14 @@
     <!-- v-bind:属性 可直接简写成 :属性 -->
     <input type="button" value="按钮" :title="mytitle + '123'"> <!-- 鼠标放上去, 显示data中的mytitle 123-->
 
+    <br>
+    <!-- vue 中 提供了 v-on: 事件绑定机制 -->
+    <!-- 报错, 提示找不到 alert 事件 -->
+    <input type="button" value="按钮" :title="mytitle + '123'" v-on:click="alert('hello')">
+    <!-- 必须绑定 vue 实例中定义的方法 -->
+    <input type="button" value="按钮" :title="mytitle + '123'" v-on:click="show">
+    <!-- 鼠标覆盖事件.... -->
+    <input type="button" value="按钮" :title="mytitle + '123'" v-on:mouseover="show">
 
   </div>
 
@@ -49,9 +57,37 @@
         msg: '123',
         msg2: '<h1>哈哈, I am h1</h1>',
         mytitle: '这是自己定义的title'
+      },
+
+      // methods 定义了挡圈 vue 实例所有可用的方法
+      methods: {   // 非常特殊, 负数形式 ,但是个对象
+        show: function() {
+          alert('Hello')
+        }
       }
+
     })
   </script>
 </body>
 
 </html>
+
+
+
+<!-- 1. 如何定义一个基本的 Vue 代码结构 -->
+<!-- 2. 插值表达式 {{}} -->
+<!-- 3. v-html -->
+<!-- 4. v-cloak -->
+<!-- 5. v-text -->
+<!-- 6. v-bind -->
+<!-- 7. v-on -->
+
+
+
+
+
+
+
+
+
+.
