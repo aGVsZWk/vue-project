@@ -29,13 +29,26 @@
           </label>
           <label>
             名称:
-            <input type="text" class="form-control" v-model="name">
+            <!-- 按键抬起自动添加 -->
+            <!-- <input type="text" class="form-control" v-model="name" @keyup="add"> -->
+            <!-- 按下回车添加 -->
+            <!-- <input type="text" class="form-control" v-model="name" @keyup.enter="add"> -->
+            <!-- 自定义按键修饰符, 按 F2 添加 -->
+            <input type="text" class="form-control" v-model="name" @keyup.f2="add">
+            <!-- 所有键值修饰符, 去 vue 官网上看, 没有提供的按键, 去搜键值码 -->
           </label>
           <input type="button" value="添加" class="btn btn-primary" @click="add">
 
           <label>
             搜索关键字:
-            <input type="text" class="form-control" v-model="keywords">
+            <!-- <input type="text" class="form-control" v-model="keywords" id="search"> -->
+            <!-- vue 没提供 v-focus, foces 使我们用 v-directive 自定义的 -->
+            <!-- vue 中所有的指令, 在调用的时候, 都以 v- 开头 -->
+            <!-- <input type="text" class="form-control" v-model="keywords" id="search" v-focus> -->
+            <!-- <input type="text" class="form-control" v-model="keywords" id="search" v-focus v-color> -->
+            <!-- 直接写 "blue" 表示变量, 去 data 中找 -->
+            <!-- 写 "'blue'" 表示形参 -->
+            <input type="text" class="form-control" v-model="keywords" id="search" v-focus v-color="'green'">
           </label>
 
         </div>
@@ -105,6 +118,46 @@
       }
     })
 
+    // 自定义全局按键修饰符
+    Vue.config.keyCodes.f2 = 113
+
+    // 使用 Vue.directive() 定义全局的指令
+    // 其中: 参数1是指令的名称, 注意: 定义时候, 不需要加 v- 前缀, 在调用的时候, 必须在指令名称前加 v- 前缀
+    // 参数2是一个对象, 这个对象身上, 有一些指令相关的函数, 这些函数可以在特定的阶段, 执行相关的操作
+    Vue.directive('focus', {
+      bind: function(el) { // 每当指令绑定到元素上的时候, 会立即执行这个 bind 函数, 只执行一次
+        // 注意: 在每个函数中, 第一次参数永远是 el, 表示被绑定了指令的那个元素, 这个 el 参数,
+        // 是一个原生的 js 对象
+        // 在元素 刚 绑定了指令的时候, 还没有插入到 DOM 中去, 这时候, 调用 focus 方法没有作用
+
+        // 和样式相关的操作, 一般都可以在 bind 中执行
+        // el.focus()
+      },
+      inserted: function(el) { // inserted 表示元素插入到 DOM 中的时候, 会执行 inserted 函数
+        // 和 JS 有关的行为操作, 最好在 inserted 中去执行, 放置 JS 行为不生效
+        el.focus()
+      },
+      updated: function(el) { // 当 VNode 更新的时候, 会执行 updated, 可能会触发多次
+
+      }
+    })
+
+
+    // 在自定义个 设置字体颜色的指令
+    // Vue.directive('color', {
+    //   bind: function(el) { // DOM 中载入样式
+    //     el.style.color = 'red'
+    //   }
+    // })
+
+    Vue.directive('color', {
+      bind: function(el, binding) { // DOM 中载入样式
+        console.log(binding.name)  // name: 自定义指令名称
+        console.log(binding.value)  // name: 指令的绑定值
+        console.log(binding.experssion)  // name: 绑定值得字符串形式
+        el.style.color = binding.value
+      }
+    })
 
     var vm = new Vue({
       el: "#app",
@@ -205,7 +258,7 @@
       filters: { // 定义私有过滤器, 过滤器有两个条件[过滤器名称 和 处理函数]
         // 过滤器调用的时候, 采用的是就近原则, 如果私有过滤器和全局过滤器名称一致,
         // 优先调用私有过滤器
-        dateFormat: function(dateStr, pattern='') {
+        dateFormat: function(dateStr, pattern = '') {
           var dt = new Date(dateStr)
           var y = dt.getFullYear()
           var m = dt.getMonth() + 1
@@ -221,6 +274,9 @@
         }
       }
     })
+
+    // 手动操作 DOM
+    // document.getElementById('search').focus()
   </script>
 </body>
 
