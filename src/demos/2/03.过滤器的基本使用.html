@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+  <link rel="stylesheet" href="https://cdn.bootcss.com/twitter-bootstrap/3.3.7/css/bootstrap.css">
+</head>
+
+<body>
+  <div id="app">
+    <p>{{msg|msgFormat}}</p>    <!-- 调用过滤器 -->
+    <p>{{msg|msgFormat2('疯狂+1', '123')}}</p>   <!-- 调用过滤器 -->
+    <p>{{msg|msgFormat2('疯狂+1', '123')|test}}</p>   <!-- 调用多个过滤器 -->
+
+
+  </div>
+  <script>
+    // 定义一个 Vue 全局过滤器, 名字叫做 msgFormat
+    Vue.filter('msgFormat', function(msg) {
+      // return msg.replace('单纯', '单纯个锤子')    // replace 替换一次
+      return msg.replace(/单纯/g, '单纯个锤子') // 使用正则替换所有
+    })
+
+    Vue.filter('msgFormat2', function(msg, arg1, arg2) {
+      return msg.replace(/单纯/g, arg1 + arg2)
+    })
+
+    Vue.filter('test', function(msg) {
+      return msg + '========'
+    })
+
+    var vm = new Vue({
+      el: "#app",
+      data: {
+        msg: '曾经,单纯, 邪恶, 单纯 , 卑鄙, 猥琐, 单纯'
+      },
+      methods: {
+
+      }
+    })
+  </script>
+</body>
+
+</html>
+
+<!-- 过滤器调用时候的格式 {{ name | nameope }} -->
