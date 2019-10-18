@@ -17,7 +17,6 @@
 
 <body>
   <div id="app">
-
     <div class="panel panel-primary">
       <div class="panel-heading">
         <h3 class="panel-title">添加品牌</h3>
@@ -58,18 +57,55 @@
       </thead>
       <tbody>
         <!-- <tr v-for="item in list" :key="item.id"> -->
-          <!-- 之前, v-for 中的数据, 都是直接从 data 上的list中直接渲染过来的 -->
-          <!-- 现在, 我们自定义一个 search 方法, 同时, 把所有的关键字, 通过传参的形式, 传递给了 search 方法 -->
-          <!-- 在 search 方法内部, 执行 for 循环, 把所有符合搜索关键字的数据, 保存到一个新数组中, 返回 -->
+        <!-- 之前, v-for 中的数据, 都是直接从 data 上的list中直接渲染过来的 -->
+        <!-- 现在, 我们自定义一个 search 方法, 同时, 把所有的关键字, 通过传参的形式, 传递给了 search 方法 -->
+        <!-- 在 search 方法内部, 执行 for 循环, 把所有符合搜索关键字的数据, 保存到一个新数组中, 返回 -->
         <tr v-for="item in search(keywords)" :key="item.id">
           <td v-cloak>{{item.id}}</td>
           <td v-cloak v-text="item.name"></td>
-          <td v-cloak>{{item.ctime}}</td>
+          <!-- <td v-cloak>{{item.ctime|dateFormat('yyyy-MM-DD')}}</td> -->
+          <td v-cloak>{{item.ctime|dateFormat('')}}</td>
           <td><a href="#" @click.prevent="del(item.id)">删除</a></td>
       </tbody>
     </table>
   </div>
+
+  <div id="app2">
+    <h3 v-cloak>{{dt}}</h3>
+    <h3 v-cloak>{{dt|dateFormat('')}}</h3>
+  </div>
+
   <script>
+    // 全局的过滤器, 得到特定的时间
+    // Vue.filter('dateFormat', function(dateStr) {
+    //   // 根据给定的时间字符串, 得到特定的时间
+    //   var dt = new Date(dateStr)
+    //   // yyyy-mm-dd
+    //   var y = dt.getFullYear()
+    //   var m = dt.getMonth() + 1
+    //   var d = dt.getDate()
+    //   // return y + '-' + m + '-' + d
+    //   return `${y}-${m}-${d}`
+    // })
+
+    Vue.filter('dateFormat', function(dateStr, pattern) {
+      // 根据给定的时间字符串, 得到特定的时间
+      var dt = new Date(dateStr)
+      // yyyy-mm-dd
+      var y = dt.getFullYear()
+      var m = dt.getMonth() + 1
+      var d = dt.getDate()
+      if (pattern.toLowerCase() === 'yyyy-mm-dd') {
+        return `${y}-${m}-${d}`
+      } else {
+        var hh = dt.getHours()
+        var mm = dt.getMinutes()
+        var ss = dt.getSeconds()
+        return `${y}-${m}-${d} ${hh}:${mm}:${ss}`
+      }
+    })
+
+
     var vm = new Vue({
       el: "#app",
       data: {
@@ -158,6 +194,33 @@
     //   return data + '123'
     // })
 
+
+    // 定义私有过滤器
+    var vm2 = new Vue({
+      el: "#app2",
+      data: {
+        dt: new Date()
+      },
+      methods: {},
+      filters: { // 定义私有过滤器, 过滤器有两个条件[过滤器名称 和 处理函数]
+        // 过滤器调用的时候, 采用的是就近原则, 如果私有过滤器和全局过滤器名称一致,
+        // 优先调用私有过滤器
+        dateFormat: function(dateStr, pattern='') {
+          var dt = new Date(dateStr)
+          var y = dt.getFullYear()
+          var m = dt.getMonth() + 1
+          var d = dt.getDate()
+          if (pattern.toLowerCase() === 'yyyy-mm-dd') {
+            return `${y}-${m}-${d}`
+          } else {
+            var hh = dt.getHours()
+            var mm = dt.getMinutes()
+            var ss = dt.getSeconds()
+            return `${y}-${m}-${d} ${hh}:${mm}:${ss} ~~~~~~~`
+          }
+        }
+      }
+    })
   </script>
 </body>
 
