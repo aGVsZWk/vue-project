@@ -86,6 +86,8 @@
   <div id="app2">
     <h3 v-cloak>{{dt}}</h3>
     <h3 v-cloak>{{dt|dateFormat('')}}</h3>
+    <!-- <h3 v-color="'pink'" v-fontweight="900" v-fontsize="'30px'">{{dt|dateFormat}}</h3> -->
+    <h3 v-color="'pink'" v-fontweight="900" v-fontsize="50">{{dt|dateFormat}}</h3>
   </div>
 
   <script>
@@ -152,9 +154,9 @@
 
     Vue.directive('color', {
       bind: function(el, binding) { // DOM 中载入样式
-        console.log(binding.name)  // name: 自定义指令名称
-        console.log(binding.value)  // name: 指令的绑定值
-        console.log(binding.experssion)  // name: 绑定值得字符串形式
+        console.log(binding.name) // name: 自定义指令名称
+        console.log(binding.value) // name: 指令的绑定值
+        console.log(binding.experssion) // name: 绑定值得字符串形式
         el.style.color = binding.value
       }
     })
@@ -271,6 +273,18 @@
             var ss = dt.getSeconds()
             return `${y}-${m}-${d} ${hh}:${mm}:${ss} ~~~~~~~`
           }
+        }
+      },
+
+      directives: { // 自定义私有指令
+        'fontweight': { // 设置字体粗细
+          bind: function (el, binding) {
+            el.style.fontWeight = binding.value
+          }
+      },
+        'fontsize': function(el, binding) { // 注意: 这个 function 等同于把 代码写到了 bind
+          // 和 update 中去
+          el.style.fontSize = parseInt(binding.value) + 'px'
         }
       }
     })
