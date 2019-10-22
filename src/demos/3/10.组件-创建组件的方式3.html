@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+
+</head>
+
+<body>
+  <div id="app">
+  </div>
+  <!-- 在被控制的 #app 外面, 使用 template 元素, 定义组件的 HTML 模板结构 -->
+  <div id="tmp1">
+    <h1>这是通过 template 元素, 在外部定义的组件结构, 这个方式, 有代码的提示和高量</h1>
+    <h4>好用, 不错!</h4>
+  </div>
+
+  <script>
+    // Vue.extend 可以省略不写
+    Vue.component('myCom3', {
+      template: '#tmp1'
+    })
+    // 注意: 无论哪种方式创建出来的组件, template 创建的组件, 必须有且只有一个跟元素 div
+
+    var vm = new Vue({
+      el: "#app",
+      data:{},
+      methods:{}
+    })
+  </script>
+
+</body>
+
+</html>
