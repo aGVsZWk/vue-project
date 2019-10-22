@@ -12,12 +12,24 @@
 
 <body>
   <div id="app">
+    abcdef
+    <!-- 使用别的组件定义的组件, 会报错 -->
+    <!-- <login></login> -->
+
   </div>
   <!-- 在被控制的 #app 外面, 使用 template 元素, 定义组件的 HTML 模板结构 -->
-  <div id="tmp1">
+
+  <div id="app2">
     <h1>这是通过 template 元素, 在外部定义的组件结构, 这个方式, 有代码的提示和高量</h1>
     <h4>好用, 不错!</h4>
+    <login></login>
   </div>
+  <!-- 在外面使用定义的组件无反应 -->
+  <!-- <login>asd</login> -->
+
+  <template id="tmp2">
+    <h1>这是私有的login组件</h1>
+  </template>
 
   <script>
     // Vue.extend 可以省略不写
@@ -31,6 +43,32 @@
       data:{},
       methods:{}
     })
+
+    var vm2 = new Vue({
+      el: "#app2",
+      data:{},
+      methods:{},
+      filters:{},
+      directives:{},
+
+      //
+      components:{   // 定义实例内部私有组件\
+        login: {
+          template: '#tmp2'
+        }
+      },
+      //
+
+      beforeCreate(){},
+      created(){},
+      beforeMount(){},
+      mounted(){},
+      beforeUpdate(){},
+      updated(){},
+      beforeDestory(){},
+      destoryed(){},
+    })
+
   </script>
 
 </body>
