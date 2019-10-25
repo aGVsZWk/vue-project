@@ -12,34 +12,49 @@
 
 <body>
   <div id="app">
-    <my-com1></my-com1>
-    <my-com1></my-com1>
-    <my-com1></my-com1>
+    <counter></counter>
+    <hr>
+    <counter></counter>
+    <hr>
+    <counter></counter>
+    <hr>
 
   </div>
   <template id="tmp1">
-    <input type="button" value="+1" @click="increment">
+    <div>
+      <input type="button" value="+1" @click="increment">
+      <h3>{{count}}</h3>
+    </div>
+
   </template>
   <script>
+    var dataObj = {
+      count: 0
+    }
 
-    var dataObj = {count: 0}
-
-    Vue.component('myCom1', {
+    Vue.component('counter', {
       template: "#tmp1",
-      data: function(){
+      // data: function() { // 3个组件同步变化, 共享了外部的对象
+      //   return dataObj
+      // },
+      data: function() {
         return {
-          msg: dataObj
+          count: 0   // 3个组件单独变化, 互不影响, 定义在了内部
+        }
+      },
+      methods: {
+        increment() {
+          this.count++
         }
       }
+
     })
 
     var vm = new Vue({
       el: "#app",
-      data:{},
-      methods:{}
+      data: {},
+      methods: {}
     })
-
-
   </script>
 
 </body>
