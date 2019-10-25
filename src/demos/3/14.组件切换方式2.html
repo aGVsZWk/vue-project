@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+
+</head>
+
+<body>
+  <div id="app">
+    <!-- 方式2: 使用 component -->
+    <!-- componentId 是一个占位符, :is 属性,可以用来指定要展示的组件名称 -->
+    <!-- <component :is="componentId"></component> -->
+    <!-- 如果里面不加单引号, 则表示字符串; 加了单引号之后, vue 才会当做表达式来解析, 当成一个组件名称 -->
+    <!-- <component :is="'login'"></component> -->
+    <!-- <component :is="'register'"></component> -->
+
+    <a href="#" @click.prevent="comName='login'">登录</a>
+    <a href="#" @click.prevent="comName='register'">注册</a>
+    <component :is="comName"></component>
+
+  </div>
+
+  <template id="tmp1">
+    <div>
+      <h3>登录组件</h3>
+    </div>
+  </template>
+
+  <template id="tmp2">
+    <div>
+      <h3>注册组件</h3>
+    </div>
+  </template>
+  <script>
+
+    Vue.component('login', {
+      template: "#tmp1",
+      data: {
+
+      },
+      methods: {
+
+      }
+    })
+    Vue.component('register', {
+      template: "#tmp2",
+      data: {
+
+      },
+      methods: {
+
+      }
+    })
+
+    var vm = new Vue({
+      el: "#app",
+      data: {
+        comName: "login"  // 当前 component 中 :is 绑定的组件名称
+      },
+      methods: {}
+    })
+  </script>
+
+</body>
+
+</html>
