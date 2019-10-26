@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+  <script src="https://cdn.bootcss.com/vue-resource/1.5.1/vue-resource.js"></script>
+  <link rel="stylesheet" href="https://cdn.bootcss.com/twitter-bootstrap/3.3.7/css/bootstrap.css">
+</head>
+
+<body>
+  <div id="app">
+  </div>
+</body>
+
+<template id="tmp1">
+  <div>
+  </div>
+</template>
+<script>
+  var com2 = {
+    template: "#tmp1",
+    data() {
+      return {
+      }
+    },
+    methods: {
+    }
+  }
+  var vm = new Vue({
+    el: "#app",
+    data: {
+      list: [
+      {id: Date.now(), user: "礼拜", content: "天生我才必有用"},
+      {id: Date.now(), user: "礼拜2", content: "天生我才必有用"},
+      {id: Date.now(), user: "礼拜3", content: "天生我才必有用"},
+      {id: Date.now(), user: "礼拜4", content: "天生我才必有用2"}
+      ]
+    },
+    methods: {
+      
+    },
+    components: {
+    }
+  })
+</script>
+
+</html>

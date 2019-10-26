@@ -29,22 +29,31 @@
 <script>
   var com2 = {
     template: "#tmp1",
+    data() {
+      return {
+        sonmsg: {name: "小头儿子", age: 6}
+      }
+    },
     methods: {
       myclick() {
         console.log('ok');
 
         // emit 英文原意： 触发，调用，发射的意思
         // 第二个及以后的参数，都是形参
-        this.$emit('func', 123)
+        this.$emit('func', this.sonmsg)
       }
     }
   }
   var vm = new Vue({
     el: "#app",
-    data: {},
+    data: {
+      dataMsgFromSon: null
+    },
     methods: {
       show(data) {
         console.log("调用了父组件身上的 show 方法 ---- " + data);
+        this.dataMsgFromSon = data
+        console.log(data);
       }
     },
     components: {
