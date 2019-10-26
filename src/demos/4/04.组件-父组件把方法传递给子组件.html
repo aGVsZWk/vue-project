@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+  <script src="https://cdn.bootcss.com/vue-resource/1.5.1/vue-resource.js"></script>
+  <link rel="stylesheet" href="https://cdn.bootcss.com/twitter-bootstrap/3.3.7/css/bootstrap.css">
+</head>
+
+<body>
+  <div id="app">
+    <!-- 父组件向子组件传递 方法， 使用的是 事件绑定机制； v-om, 当我们自定义了一个 事件属性之后， 子组件
+      就能够调用传递进去的 这个方法了 -->
+    <!-- <com2 v-on:func="show"></com2> -->
+    <com2 @func="show"></com2>
+  </div>
+</body>
+
+<template id="tmp1">
+  <div>
+    <h1>这是子组件</h1>
+    <input type="button" value="这是子组件中按钮- 点击它触发 父组件传递的 func" @click="myclick">
+  </div>
+</template>
+<script>
+  var com2 = {
+    template: "#tmp1",
+    methods: {
+      myclick() {
+        console.log('ok');
+
+        // emit 英文原意： 触发，调用，发射的意思
+        // 第二个及以后的参数，都是形参
+        this.$emit('func', 123)
+      }
+    }
+  }
+  var vm = new Vue({
+    el: "#app",
+    data: {},
+    methods: {
+      show(data) {
+        console.log("调用了父组件身上的 show 方法 ---- " + data);
+      }
+    },
+    components: {
+      com2
+    }
+  })
+</script>
+
+</html>
