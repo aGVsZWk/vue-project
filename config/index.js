@@ -10,7 +10,7 @@ module.exports = {
     env: require('./dev.env'),
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST
-    port: 20000, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
+    port: 3000, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
     autoOpenBrowser: true,
     errorOverlay: true,
     notifyOnErrors: true,
@@ -21,7 +21,7 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/api': {
-        target: 'http://192.168.2.55',
+        target: 'http://127.0.0.1',
         changeOrigin: true,
         pathRewrite: {
           '^/api': ''
